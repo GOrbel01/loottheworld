@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="ltw_dbc_000001" author="FinalSquall">
+        <createTable tableName="ltw_base_stat">
+            <column name="statid" type="int" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="statname" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="ltw_dbc_000002" author="FinalSquall">
+        <createTable tableName="ltw_weapon">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weapondmgmin" type="DECIMAL(20,10)">
+            </column>
+            <column name="weapondmgmax" type="DECIMAL(20,10)">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="ltw_dbc_000003" author="FinalSquall">
+        <createTable tableName="ltw_item_stat_value">
+            <column name="statid" type="int" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="itemstatpk" />
+            </column>
+            <column name="statvalue" type="int">
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="itemstatpk"/>
+            </column>
+        </createTable>
+
+<!--        <addForeignKeyConstraint constraintName="fk_itemstat"-->
+<!--                                 baseTableName="ltw_item_stat_value"-->
+<!--                                 baseColumnNames="statid"-->
+<!--                                 referencedTableName="ltw_base_stat"-->
+<!--                                 referencedColumnNames="statid"/>-->
+    </changeSet>
+    <changeSet id="ltw_dbc_000004" author="FinalSquall">
+        <addColumn tableName="ltw_item_stat_value">
+            <column name="statindex" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="ltw_dbc_000005" author="FinalSquall">
+        <addColumn tableName="ltw_weapon">
+            <column name="stattype" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="ltw_dbc_000006" author="">
+        <renameTable oldTableName="ltw_weapon" newTableName="ltw_item_base" schemaName="loottheworld"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000007" author="FinalSquall">
+        <renameColumn tableName="ltw_item_base" oldColumnName="stattype" newColumnName="itemtype" columnDataType="int"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000008" author="FinalSquall">
+        <modifyDataType tableName="ltw_item_base" columnName="itemtype" newDataType="varchar(20)"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000009" author="FinalSquall">
+        <createIndex tableName="ltw_item_base" indexName="index_item_type">
+            <column name="itemtype"></column>
+        </createIndex>
+    </changeSet>
+    <changeSet id="ltw_dbc_000010" author="FinalSquall">
+        <createTable tableName="ltw_item_subtype">
+            <column name="itemsubtypeid" type="int" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="itemtype" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="itemsubtypename" type="varchar(80)">
+
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="ltw_dbc_000011" author="FinalSquall">
+        <renameColumn tableName="ltw_item_base" oldColumnName="itemtype" newColumnName="ltw_table_itemtype" columnDataType="varchar(30)"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000012" author="FinalSquall">
+        <addColumn tableName="ltw_item_base">
+            <column name="itemtype" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="ltw_dbc_000013" author="FinalSquall">
+        <addColumn tableName="ltw_item_base">
+            <column name="itemstats" type="json">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
