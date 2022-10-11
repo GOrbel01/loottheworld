@@ -102,4 +102,11 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="ltw_dbc_000014" author="FinalSquall">
+        <addColumn tableName="ltw_item_base">
+            <column name="armor" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

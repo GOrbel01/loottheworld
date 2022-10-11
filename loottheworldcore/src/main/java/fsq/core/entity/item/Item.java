@@ -1,7 +1,6 @@
 package fsq.core.entity.item;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import fsq.core.entity.stat.ItemStat;
 import org.hibernate.annotations.Type;
@@ -9,8 +8,6 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 @Entity
@@ -31,6 +28,9 @@ public class Item implements Serializable {
     @Column(name = "itemstats", columnDefinition = "json")
     @JsonProperty("itemstats")
     private List<ItemStat> itemStats;
+
+    @Column(name = "armor")
+    private Integer armor;
 
     public Item() {
 
@@ -67,5 +67,13 @@ public class Item implements Serializable {
 
     public void setItemStats(List<ItemStat> itemStats) {
         this.itemStats = itemStats;
+    }
+
+    public Integer getArmor() {
+        return armor;
+    }
+
+    public void setArmor(Integer armor) {
+        this.armor = armor;
     }
 }

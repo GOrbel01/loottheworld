@@ -1,5 +1,7 @@
 package org.fsq.controller.stat;
 
+import fsq.core.entity.item.mapper.FieldUpdater;
+import fsq.core.entity.item.mapper.UpdateItem;
 import fsq.core.entity.stat.Stat;
 import fsq.core.data.repository.stat.StatRepository;
 import fsq.core.entity.stat.StatLookup;
@@ -8,12 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class StatController {
     @Autowired
     private StatRepository statRepository;
+
+    @Autowired
+    private FieldUpdater fieldUpdater;
 
     @GetMapping("/stats")
     public List<Stat> getStats() {
@@ -26,13 +31,20 @@ public class StatController {
     }
 
     @GetMapping("/stat/{id}")
-    public Stat getById(@PathVariable Long id) {
+    public Stat getById(@PathVariable Integer id) {
         return statRepository.findById(id).get();
     }
 
     @PostMapping("/stat")
     public void postStat(@RequestBody Stat stat) {
         statRepository.save(stat);
+    }
+
+    @PutMapping("/stat/{id}")
+    public void updateStat(@PathVariable(value = "statId") Integer statId, @RequestBody Map<String, UpdateItem> params) {
+        Stat toUpdate = statRepository.findById(statId).get();
+        fieldUpdater.updateFields(toUpdate, params);
+        statRepository.save(toUpdate);
     }
 
     private List<StatLookup> mapStats(List<Stat> stats) {
