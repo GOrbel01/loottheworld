@@ -131,21 +131,4 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    private ClientRegistration googleClientRegistration() {
-//        return ClientRegistration.withRegistrationId("google")
-//                .clientId("51950738017-9i9blk4gs06ccfv12o38f6tqathr0jj0.apps.googleusercontent.com")
-//                .clientSecret("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")
-//                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-//                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-//                .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
-//                .scope("openid", "profile", "email", "address", "phone")
-//                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
-//                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
-//                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-//                .userNameAttributeName(IdTokenClaimNames.SUB)
-//                .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
-//                .clientName("Google")
-//                .build();
-//    }
 }
