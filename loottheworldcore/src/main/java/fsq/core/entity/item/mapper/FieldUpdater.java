@@ -16,7 +16,7 @@ import java.util.*;
 public class FieldUpdater {
     /**
      * Use Reflection to dynamically update objects when they are retrieved by PUT request
-     * NOTE: Requires strict matching of field names and setter methods. Will also trip up with similar field names
+     * NOTE: Requires strict matching of field names and setter methods. Will also trip up with similar field name
      * naming. May require custom annotations in future to work properly. Or very strict naming of Field and Setter.
      * I.e. if field is String name setter is called setName(String name) if field is statName setter is setStatName()
      * so that we can directly establish setter from field name. Second will probably be the choice with an annotation for cases when

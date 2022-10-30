@@ -2,6 +2,8 @@ package org.fsq.controller.item;
 
 import fsq.core.data.repository.item.ItemRepository;
 import fsq.core.entity.item.Item;
+import org.fsq.security.user.CurrentUser;
+import org.fsq.security.user.UserPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +22,17 @@ public class ItemController {
     }
 
     @GetMapping("/items")
-    public List<Item> getItems() {
-        List<Item> result = itemRepository.findAll();
+    public List<Item> getItems(@CurrentUser UserPrinciple userPrincipal) {
+        List<Item> result = itemRepository.findItemsByUserId(userPrincipal.getId());
         if (result == null || result.isEmpty()) {
             return new ArrayList<>();
         }
         return result;
+    }
+
+    @PutMapping("/items/batch")
+    public void generateRandomWeapons() {
+
     }
 
     @PostMapping("/item")

@@ -1,10 +1,14 @@
 package fsq.core.entity.stat;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import fsq.core.entity.user.LtwKeyEntity;
+import fsq.core.entity.user.User;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ltw_base_stat")
-public class Stat {
+@Table(name = "ltw_stat_base")
+public class Stat extends LtwKeyEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -36,4 +40,5 @@ public class Stat {
     public void setStatName(String statName) {
         this.statName = statName;
     }
+
 }

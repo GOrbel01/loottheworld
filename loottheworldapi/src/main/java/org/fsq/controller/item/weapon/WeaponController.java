@@ -33,7 +33,6 @@ public class WeaponController {
         weaponRepository.save(weapon);
     }
 
-
     @PutMapping("/weapon/{id}")
     public void updateItem(@PathVariable(value = "id") Long id, @RequestBody Map<String, UpdateItem> params) {
         Weapon toUpdate = weaponRepository.findById(id).get();

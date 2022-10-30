@@ -2,7 +2,6 @@ package fsq.core.entity.stat;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 public class ItemStat implements Serializable {

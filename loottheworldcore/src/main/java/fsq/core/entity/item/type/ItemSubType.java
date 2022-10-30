@@ -1,10 +1,14 @@
 package fsq.core.entity.item.type;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import fsq.core.entity.user.LtwKeyEntity;
+import fsq.core.entity.user.User;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ltw_item_subtype")
-public class ItemSubType {
+public class ItemSubType extends LtwKeyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "itemsubtypeid")
@@ -39,4 +43,5 @@ public class ItemSubType {
     public void setSubTypeName(String subTypeName) {
         this.subTypeName = subTypeName;
     }
+
 }

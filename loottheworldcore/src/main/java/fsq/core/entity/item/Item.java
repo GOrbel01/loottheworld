@@ -3,6 +3,8 @@ package fsq.core.entity.item;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import fsq.core.entity.stat.ItemStat;
+import fsq.core.entity.user.LtwKeyEntity;
+import fsq.core.entity.user.User;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "ltw_table_itemtype")
 @TypeDef(name = "json", typeClass = JsonType.class)
-public class Item implements Serializable {
+public class Item extends LtwKeyEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;

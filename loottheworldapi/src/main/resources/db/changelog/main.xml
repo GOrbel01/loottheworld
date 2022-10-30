@@ -109,4 +109,121 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="ltw_dbc_000015" author="FinalSquall">
+        <dropTable tableName="ltw_item_stat_value"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000016" author="FinalSquall">
+        <createTable tableName="ltw_user">
+            <column name="userid" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="validemail" type="tinyint(1)" defaultValueBoolean="false"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="ltw_dbc_000017" author="FinalSquall">
+        <dropTable tableName="ltw_user"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000018" author="FinalSquall">
+        <createTable tableName="ltw_user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="imageurl" type="varchar(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="validemail" type="tinyint(1)" defaultValueBoolean="false"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="ltw_dbc_000019" author="FinalSquall">
+        <comment>Password is not required for google login here in which case password should be null. Would only be needed if user/password JWT token login implemented</comment>
+        <dropNotNullConstraint tableName="ltw_user" columnName="password" columnDataType="varchar(80)" />
+    </changeSet>
+    <changeSet id="ltw_dbc_000020" author="FinalSquall">
+        <comment>Items will be associated with a user</comment>
+        <addColumn tableName="ltw_item_base">
+            <column name="userid" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="ltw_dbc_000021" author="FinalSquall">
+        <addForeignKeyConstraint baseTableName="ltw_item_base" baseColumnNames="userid" constraintName="fkuseritem" referencedTableName="ltw_user"
+                                 referencedColumnNames="id" onDelete="CASCADE"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000022" author="FinalSquall">
+        <comment>As we will only be using Google Login, email vaildation will not be neccesary</comment>
+        <dropColumn tableName="ltw_user" columnName="validemail"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000023" author="FinalSquall">
+        <comment>Stats will be per user </comment>
+        <addColumn tableName="ltw_base_stat">
+            <column name="userid" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="ltw_base_stat" baseColumnNames="userid" constraintName="fkuserstat" referencedTableName="ltw_user"
+                                 referencedColumnNames="id" onDelete="CASCADE"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000024" author="FinalSquall">
+        <comment>Item subtypes will be per user</comment>
+        <addColumn tableName="ltw_item_subtype">
+            <column name="userid" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="ltw_item_subtype" baseColumnNames="userid" constraintName="fkuseritemst" referencedTableName="ltw_user"
+                                 referencedColumnNames="id" onDelete="CASCADE"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000025" author="FinalSquall">
+        <renameTable oldTableName="ltw_base_stat" newTableName="ltw_stat_base"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000026" author="FinalSquall">
+        <createTable tableName="ltw_loot_rarity_base">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userid" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="color" type="varchar(200)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ltw_loot_rarity_base" baseColumnNames="userid" constraintName="fkuserlootrarity" referencedTableName="ltw_user"
+                                 referencedColumnNames="id" onDelete="CASCADE"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000027" author="FinalSquall">
+        <addColumn tableName="ltw_loot_rarity_base">
+            <column name="order" defaultValue="0" type="int"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="ltw_dbc_000028" author="FinalSquall">
+        <renameColumn tableName="ltw_loot_rarity_base" columnDataType="int" oldColumnName="order" newColumnName="rarityorder"/>
+    </changeSet>
+    <changeSet id="ltw_dbc_000029" author="FinalSquall">
+        <addColumn tableName="ltw_loot_rarity_base">
+            <column name="tier" defaultValue="0" type="int"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

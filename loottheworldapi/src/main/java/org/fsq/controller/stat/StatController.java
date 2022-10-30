@@ -5,7 +5,12 @@ import fsq.core.entity.item.mapper.UpdateItem;
 import fsq.core.entity.stat.Stat;
 import fsq.core.data.repository.stat.StatRepository;
 import fsq.core.entity.stat.StatLookup;
+import fsq.core.entity.user.User;
+import org.fsq.security.user.CurrentUser;
+import org.fsq.security.user.UserPrinciple;
+import org.fsq.security.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -22,12 +27,12 @@ public class StatController {
 
     @GetMapping("/stats")
     public List<Stat> getStats() {
-        return statRepository.findAll();
+        return statRepository.findStatsByUserId(SecurityUtils.getCurrentAuthenticatedUser().getId());
     }
 
     @GetMapping("/stats/lookup")
     public List<StatLookup> getStatsForSelect() {
-        return mapStats(statRepository.findAll());
+        return mapStats(statRepository.findStatsByUserId(SecurityUtils.getCurrentAuthenticatedUser().getId()));
     }
 
     @GetMapping("/stat/{id}")
@@ -41,7 +46,7 @@ public class StatController {
     }
 
     @PutMapping("/stat/{id}")
-    public void updateStat(@PathVariable(value = "statId") Integer statId, @RequestBody Map<String, UpdateItem> params) {
+    public void updateStat(@PathVariable(value = "id") Integer statId, @RequestBody Map<String, UpdateItem> params) {
         Stat toUpdate = statRepository.findById(statId).get();
         fieldUpdater.updateFields(toUpdate, params);
         statRepository.save(toUpdate);
@@ -57,5 +62,4 @@ public class StatController {
         }
         return result;
     }
-
 }
